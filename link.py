@@ -23,18 +23,6 @@ class LinkedList:
             oldhead.next = newhead
         self.head = newhead
 
-    def reset(self):
-        self.current = None
-
-    def next(self):
-        if self.current == None:
-            if self.tail == None:
-                return False
-            self.current = self.tail
-            return True
-        self.current = self.current.next
-        return self.current != None
-
     def sort(self):
         self.__sort(self.tail, self.head)
 
@@ -63,9 +51,16 @@ class LinkedList:
             else:
                 current = current.next
 
+    def traverse(self, callback):
+        current = self.tail
+        while True:
+            callback(current.value)
+            if current == self.head:
+                break
+            current = current.next
+
 if __name__ == '__main__':
-    sample = random.sample(range(1000), 10)
-    print 'sample {}\n'.format(sample)
+    sample = random.sample(range(10000), 25)
 
     list = LinkedList()
     for i in sample:
@@ -73,9 +68,7 @@ if __name__ == '__main__':
 
     list.sort()
 
-    current = list.tail
-    while True:
-        print 'Value {}'.format(current.value)
-        if current == list.head:
-            break
-        current = current.next
+    def printitem(x):
+        print('{}'.format(x))
+
+    list.traverse(printitem)
