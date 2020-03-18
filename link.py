@@ -10,21 +10,18 @@ class Link:
 class LinkedList:
 
     def __init__(self):
-        self.tail = None
-        self.head = None
+        self.head = Link(None, None, None)
+        self.tail = self.head
 
-    def insert(self, value):
-        if self.head == None:
-            newhead = Link(value, None, None)
-            self.tail = newhead
-        else:
-            oldhead = self.head
-            newhead = Link(value, None, oldhead)
-            oldhead.next = newhead
-        self.head = newhead
+    def add(self, value):
+        old_head = self.head
+        new_head = Link(None, None, old_head)
+        old_head.value = value
+        old_head.next = new_head
+        self.head = new_head
 
     def sort(self):
-        self.__sort(self.tail, self.head)
+        self.__sort(self.tail, self.head.previous)
 
     def __sort(self, tail, head):
         if tail == head:
@@ -54,17 +51,17 @@ class LinkedList:
     def traverse(self, callback):
         current = self.tail
         while True:
-            callback(current.value)
             if current == self.head:
                 break
+            callback(current.value)
             current = current.next
 
 if __name__ == '__main__':
-    sample = random.sample(range(10000), 25)
+    sample = random.sample(range(100), 25)
 
     list = LinkedList()
     for i in sample:
-        list.insert(i)
+        list.add(i)
 
     list.sort()
 
